@@ -21,10 +21,12 @@ public class WaitNotify {
     static class Wait implements Runnable {
         @Override
         public void run() {
+            // 加锁，拥有 lock 的 Monitor
             synchronized (lock) {
                 while (flag) {
                     try {
                         print("flag is true.", "wait");
+                        // 释放 lock 的锁
                         lock.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -39,6 +41,7 @@ public class WaitNotify {
     static class Notify implements Runnable {
         @Override
         public void run() {
+            // 加锁，拥有 lock 的 Monitor
             synchronized (lock) {
                 print("hold lock. ", "notify");
                 lock.notifyAll();
